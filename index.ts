@@ -1,27 +1,36 @@
 declare var __BRYTHON__: any;
+const $B = __BRYTHON__;
 
-import LISS, {__set_cstr_host} from "./LISS/index.js";
+import LISS from "./LISS/index.js";
+
+const PyBLISS = __BRYTHON__.runPythonSource(`
+def buildBlissBase(liss):
+    class BlissBase:
+        @property
+        def content(self):
+            return self.LISS.content
+
+    BlissBase.LISS = liss
+    return BlissBase
+
+def build_PyBlissBase(Klass, liss):
+    pybliss_base = Klass.__new__(Klass)
+    pybliss_base.LISS = liss
+    pybliss_base.__init__()
+    return pybliss_base
+
+`, "BLISS");
+
+const buildBlissBase = PyBLISS.buildBlissBase
 
 function BLISS() {
 
-    return class PyLISSBase {
-
-        static __Liss = LISS();
-        private __liss!: InstanceType<typeof PyLISSBase.__Liss>;
-
-        bliss_init() {
-            this.__liss = new PyLISSBase.__Liss();
-        }
-
-        get content() { //TODO: protected ?
-            return (this.__liss as any).content;
-        }
-        
-    }
+    //TODO: LISSOpts...
+    return buildBlissBase(LISS());
 }
 
-//TODO: auto add LISS fcts...
-
+//TODO: AutoLISS
+//TODO: Bliss function : use python definitions when possible...
 BLISS.define = function define(tagname: string, klass: any, opts: any) {
     return LISS.define(tagname, klass, opts);
 }
@@ -30,10 +39,10 @@ BLISS.define = function define(tagname: string, klass: any, opts: any) {
 BLISS.test = function test(tagname: string, pyclass:any) {
 
     try {
-        const Base = pyclass.$js_func.__Liss as ReturnType<typeof LISS>;
 
         //TODO: class ensure unicity...
-        class PyClass extends Base {
+        const Base = $B.$getattr(pyclass, "LISS") as ReturnType<typeof LISS>;
+        class LISSBaseForBLISS extends Base {
 
             //TODO use symbol...
             pyobj: any;
@@ -41,12 +50,17 @@ BLISS.test = function test(tagname: string, pyclass:any) {
             constructor() {
                 super();
 
-                __set_cstr_host( this.host );                
-                this.pyobj = __BRYTHON__.$call(pyclass, [0,1,1])();
+                PyBLISS.build_PyBlissBase(pyclass, this);
+
+                /*const _b_ = $B.builtins;
+                const pyobj = $B.$call($B.$getattr(_b_.object, '__new__'), [4,4,21])(pyclass)
+                $B.$setattr(pyobj, "LISS", $B.jsobj2pyobj(this)); // is jsobj2pyobj required ?
+                $B.$call($B.$getattr(pyobj, '__init__'), [0,0,12])();*/
+
             }
         }
 
-        LISS.define(tagname, PyClass);
+        LISS.define(tagname, LISSBaseForBLISS);
     } catch(e) {
         console.log(e);
     }
