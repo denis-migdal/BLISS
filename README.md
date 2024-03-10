@@ -7,6 +7,12 @@ Web Components are simple to use... but, due to a multitude of non-intuitives be
 
 **LISS enables you to easily use Web Compoments without worrying about all of that.**
 
+## Install LISS
+
+In order to use BLISS in your project, copy either the `/index.ts` or `/index.js` file into your project.
+
+💡 If you need to rebuild the JS file, use the command: `tsc index.ts --strict --target esnext --module esnext`.
+
 ## Basic usage
 
 TODO
