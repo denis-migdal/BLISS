@@ -1,0 +1,6 @@
+[submodule "brython"]
+	path = brython
+	url = git@github.com:brython-dev/brython.git
+[submodule "LISS"]
+	path = LISS
+	url = git@github.com:denis-migdal/LISS.git
