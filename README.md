@@ -3,7 +3,7 @@
 Bliss enables to use [LISS](https://github.com/denis-migdal/LISS) with Brython
 
 
-Web Components are simple to use... but, due to a multitude of non-intuitives behaviors and rules, **hard to use *correctly***. Most of examples and documentation found on the Internet are **unsafe** (cf [List of issues solved by LISS](#list-of-issues-solved-by-liss)).
+Web Components are simple to use... but, due to a multitude of non-intuitives behaviors and rules, **hard to use *correctly***. Most of examples and documentation found on the Internet are **unsafe** (cf [List of issues solved by LISS](https://github.com/denis-migdal/LISS#list-of-issues-solved-by-liss)).
 
 **LISS enables you to easily use Web Compoments without worrying about all of that.**
 
@@ -64,4 +64,5 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 
 [📖 See the auto mode for easier usage.](#auto-mode)
 
-[📖 And a lot more features and examples below.
+[📖 And a lot more features and examples below.](#features-and-examples)
+
