@@ -2,6 +2,7 @@ const $B = __BRYTHON__;
 import LISS from "./LISS/index.js";
 __BRYTHON__.imported.LISS = LISS;
 __BRYTHON__.imported.BLISS_HELPERS = {
+    run: function (e) { e(); },
     LISS: function (opts) {
         return LISS(opts);
     },

@@ -5,6 +5,7 @@ import LISS from "./LISS/index.js";
 
 __BRYTHON__.imported.LISS = LISS;
 __BRYTHON__.imported.BLISS_HELPERS = {
+    run: function(e) { e() },
     LISS: function(opts: any){ // dunno why required...
         return LISS(opts);
     },
@@ -13,7 +14,7 @@ __BRYTHON__.imported.BLISS_HELPERS = {
         class LISSBaseForBLISS extends Base {
 
             //TODO use symbol...
-            pyobj: any;
+            readonly pyobj: any;
        
             constructor() {
                 super();

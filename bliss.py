@@ -7,7 +7,7 @@ for x in window.Object.getOwnPropertyNames(window):
 		g[x] = getattr(window, x, None)
 
 
-#import LISS;
+import LISS;
 import BLISS_HELPERS;
 
 def BLISS(css = javascript.UNDEFINED, content = javascript.UNDEFINED, host = HTMLElement, attributes = []):
@@ -54,8 +54,18 @@ def define(tagname: str, pyclass:any):
 
     BLISS_HELPERS.define( tagname, pyclass_builder, Base )
 
-
 BLISS.define = define
+
+async def getBLISS(elem):
+    return (await LISS.getLISS(elem)).pyobj
+
+BLISS.getBLISS = getBLISS
+
+
+def run(coroutine):
+    BLISS_HELPERS.run(coroutine)
+
+BLISS.run = run  
 
 #__all__ = ["BLISS"]
 

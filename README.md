@@ -175,6 +175,16 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 
 ### Access components through the DOM
 
+LISS provides several tools to securely manipulate components through the DOM:
+
+- from an `HTMLElement`:
+  
+  ```python
+  BLISS.getBLISS(elem)
+  ```
+  
+  [📖 See HTMLElement manipulations for more](#htmlelement-manipulations)
+
 <mark>TODO</mark>
 
 ### Use HTML/CSS files/strings to fill the component
@@ -213,20 +223,17 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 
 ## TODO
 
-- [ ] Access components through the DOM
-
-- [ ] Use HTML/CSS files/strings to fill the component
-
 - [ ] EventTarget for Brython
 
 - [ ] TODO auto mode
-
 
 
 - [ ] Dynamically build component instances
 
 - [ ] ShadowRoot helpers
 
-- [ ] BLISS full API
+- [ ] BLISS full API doc & implementation
 
 - [ ] Doc for onDOM(dis)connected
+
+- [ ] DOM manipulation (BLISS.qs, get descriptor, etc.)

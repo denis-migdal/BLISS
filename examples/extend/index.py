@@ -17,8 +17,15 @@ class MyComponent(BLISS(
 # Define your WebComponent
 BLISS.define('my-component', MyComponent); # define the "my-component" component.
 
-#const component = await LISS.qs('tr[is="my-component"]');
 
-#component.addEventListener('click', () => {
-#    alert('click');
-#});
+#const component = await LISS.qs(...);
+elem = document.querySelector('tr[is="my-component"]');
+
+async def main():
+    component = await BLISS.getBLISS( elem )
+    #component.addEventListener('click', () => {
+    #    alert('click');
+    #});
+
+BLISS.run( main )
+
