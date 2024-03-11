@@ -1,3 +1,10 @@
+from browser import window
+g = globals()
+for x in window.Object.getOwnPropertyNames(window):
+	if x not in g and not x.startswith("on") and x not in ["print", "opener", "frameElement", "InstallTrigger", "def_value"]:
+		g[x] = getattr(window, x, None)
+
+
 import LISS;
 import BLISS_HELPERS;
 
@@ -6,16 +13,29 @@ def BLISS():
 
 def buildBlissBase(liss):
     class BlissBase:
+
         @property
         def content(self):
             return self.LISS.content
+        
+        @property
+        def host(self):
+            return self.LISS.host
+        
+        @property
+        def attrs(self):
+            return self.LISS.attrs
+        
+        @property
+        def params(self):
+            return self.LISS.params
 
     BlissBase.LISS = liss
     return BlissBase
 
 ####
 
-def test(tagname: str, pyclass:any):
+def define(tagname: str, pyclass:any):
     Base = pyclass.LISS
 
     def pyclass_builder(this):
@@ -24,7 +44,7 @@ def test(tagname: str, pyclass:any):
     BLISS_HELPERS.define( tagname, pyclass_builder, Base )
 
 
-BLISS.test = test
+BLISS.define = define
 
 #__all__ = ["BLISS"]
 
