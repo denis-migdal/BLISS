@@ -10,11 +10,13 @@ for x in window.Object.getOwnPropertyNames(window):
 #import LISS;
 import BLISS_HELPERS;
 
-def BLISS(content = javascript.UNDEFINED, host = HTMLElement, attributes = []):
+def BLISS(css = javascript.UNDEFINED, content = javascript.UNDEFINED, host = HTMLElement, attributes = []):
+
     return buildBlissBase(BLISS_HELPERS.LISS({
          "attributes": attributes,
-         "host": host,
-         "content": content
+         "host"      : host,
+         "content"   : content,
+         "css"       : css
     }));
 
 def buildBlissBase(liss):

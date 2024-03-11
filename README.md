@@ -179,7 +179,27 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 
 ### Use HTML/CSS files/strings to fill the component
 
-<mark>TODO</mark>
+`BLISS()` allows to inject HTML and CSS files/strings into your component thanks to the `content` and `css` options:
+
+```python
+# cf /examples/inject-html-css/
+from BLISS import *;
+
+CSS_RULES = """
+    :host {
+        color: blue;
+    }
+"""
+
+class MyComponent(BLISS(
+                           content=  fetch("./component.html"),		      # str|Response|HTMLTemplateElement or a Promise of it.
+                           css    = [fetch('./component.css'), CSS_RULES] # str|Response|HTMLStyleElement|CSSStyleSheet or a Promise of it, or an array of it.
+                        )):
+    pass
+
+# Define your WebComponent
+BLISS.define('my-component', MyComponent); # define the "my-component" component.
+```
 
 ### Auto mode
 
