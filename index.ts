@@ -1,10 +1,13 @@
 declare var __BRYTHON__: any;
+const $B = __BRYTHON__;
 
 import LISS from "./LISS/index.js";
 
 __BRYTHON__.imported.LISS = LISS;
 __BRYTHON__.imported.BLISS_HELPERS = {
-
+    LISS: function(opts: any){ // dunno why required...
+        return LISS(opts);
+    },
     define: function(tagname: string, pyclass_builder:(a:any) => any, Base: ReturnType<typeof LISS>) {
         
         class LISSBaseForBLISS extends Base {
@@ -15,13 +18,17 @@ __BRYTHON__.imported.BLISS_HELPERS = {
             constructor() {
                 super();
 
-                pyclass_builder(this);
+                this.pyobj = pyclass_builder(this);
        
                 /*const _b_ = $B.builtins;
                 const pyobj = $B.$call($B.$getattr(_b_.object, '__new__'), [4,4,21])(pyclass)
                 $B.$setattr(pyobj, "LISS", $B.jsobj2pyobj(this)); // is jsobj2pyobj required ?
                 $B.$call($B.$getattr(pyobj, '__init__'), [0,0,12])();*/
        
+            }
+
+            protected override onAttrChanged(name: string, oldValue: string, newValue: string) {
+                $B.$call($B.$getattr(this.pyobj, 'onAttrChanged'), [4,4,21])(name, oldValue, newValue);
             }
         }
         LISS.define(tagname, LISSBaseForBLISS );

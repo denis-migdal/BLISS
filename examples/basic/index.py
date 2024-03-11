@@ -4,7 +4,6 @@ class MyComponent(BLISS()):
 
     # Initialize your WebComponent
     def __init__(self):
-        super();
 
         # Use self.content to initialize your component's content
         self.content.append('Hello World ;)');
