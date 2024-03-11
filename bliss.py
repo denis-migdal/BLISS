@@ -1,4 +1,6 @@
 from browser import window
+import javascript
+
 g = globals()
 for x in window.Object.getOwnPropertyNames(window):
 	if x not in g and not x.startswith("on") and x not in ["print", "opener", "frameElement", "InstallTrigger", "def_value", "print"]:
@@ -8,9 +10,11 @@ for x in window.Object.getOwnPropertyNames(window):
 #import LISS;
 import BLISS_HELPERS;
 
-def BLISS(attributes = []):
+def BLISS(content = javascript.UNDEFINED, host = HTMLElement, attributes = []):
     return buildBlissBase(BLISS_HELPERS.LISS({
-         "attributes": attributes
+         "attributes": attributes,
+         "host": host,
+         "content": content
     }));
 
 def buildBlissBase(liss):

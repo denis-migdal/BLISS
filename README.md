@@ -90,7 +90,7 @@ Then, `self.onAttrChanged()` will be called at each modification of the observed
 `self.attrs` enables to access them in an efficient way, i.e. without requiring multiples access to the DOM. Modification of an attribute through `self.attrs` will update the HTML attributes without firing `self.onAttrChanged()`.
 
 ```python
-// cf /examples/attributes
+# cf /examples/attributes
 from BLISS import *;
 
 class MyComponent(BLISS(
