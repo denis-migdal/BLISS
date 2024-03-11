@@ -1,9 +1,9 @@
-
 from BLISS import *;
 
 class MyComponent(BLISS(
-                            host = HTMLTableRowElement,
-                            #extends = EventTarget, # the component is able to send events.
+                            host = HTMLTableRowElement, # the component is a <tr>
+                            #TODO: make BRYTHON class for that... (extending JS class is an issue)
+                            #extends = EventTarget,      # the component is able to send events.
                             content = "<td>Hello World ;)</td>"
                         )):
 

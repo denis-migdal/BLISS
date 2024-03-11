@@ -71,7 +71,7 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 You can see all examples below in the [`BLISS/examples/` directory](./examples/).
 
 - [Management of HTML attributes](#manage-html-attributes)
-- [Extend JS and HTML classes](#extend-js-and-html-classes)
+- [Extend Brython and HTML classes](#extend-brython-and-html-classes)
 - [Dynamically build component instances](#dynamically-build-component-instances)
 - [Access components through the DOM](#access-components-through-the-dom)
 - [Use HTML/CSS files/strings to fill the component](#use-htmlcss-filesstrings-to-fill-the-component)
@@ -130,4 +130,42 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 
 ```html
 <my-component counter="null"></my-component><!-- prints 01234 -->
+```
+
+### Extend Brython and HTML classes
+
+`BLISS()` allows you to extends existing classes thanks to the `extends` (Brython classes) and `host` (HTMLElement classes) options.
+
+```python
+# cf /examples/extend
+from BLISS import *;
+
+class MyComponent(BLISS(
+                            host = HTMLTableRowElement, # the component is a <tr>
+                            #TODO: make BRYTHON class for that... (extending JS class is an issue)
+                            #extends = EventTarget,      # the component is able to send events.
+                            content = "<td>Hello World ;)</td>"
+                        )):
+
+    # Initialize your WebComponent
+    def __init__(self):
+        pass
+        #this.host.addEventListener('click', () => {
+        #    this.dispatchEvent(new CustomEvent('click', {detail: null}));
+        #})
+
+# Define your WebComponent
+BLISS.define('my-component', MyComponent); # define the "my-component" component.
+
+#const component = await LISS.qs('tr[is="my-component"]');
+
+#component.addEventListener('click', () => {
+#    alert('click');
+#});
+```
+
+```html
+<table>
+    <tr is="my-component"></tr>
+</table>
 ```
