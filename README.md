@@ -169,3 +169,44 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
     <tr is="my-component"></tr>
 </table>
 ```
+### Dynamically build component instances
+
+<mark>TODO</mark>
+
+### Access components through the DOM
+
+<mark>TODO</mark>
+
+### Use HTML/CSS files/strings to fill the component
+
+<mark>TODO</mark>
+
+### Auto mode
+
+<mark>TODO</mark>
+
+### ShadowRoot helpers
+
+<mark>TODO</mark>
+
+### BLISS full API
+
+## TODO
+
+- [ ] Access components through the DOM
+
+- [ ] Use HTML/CSS files/strings to fill the component
+
+- [ ] EventTarget for Brython
+
+- [ ] TODO auto mode
+
+
+
+- [ ] Dynamically build component instances
+
+- [ ] ShadowRoot helpers
+
+- [ ] BLISS full API
+
+- [ ] Doc for onDOM(dis)connected
