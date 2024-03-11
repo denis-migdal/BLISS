@@ -39,6 +39,14 @@ __BRYTHON__.imported.BLISS_HELPERS = {
 // fetch and execute brython script.
 const CURRENT_SCRIPT_URL = import.meta.url;
 const BRYTHON_SCRIPT_URL = CURRENT_SCRIPT_URL.slice(0, CURRENT_SCRIPT_URL.lastIndexOf("/") ) + "/bliss.py";
-const BRYTHON_SCRIPT = await (await fetch(BRYTHON_SCRIPT_URL)).text();
+
+//const BRYTHON_SCRIPT = await (await fetch(BRYTHON_SCRIPT_URL)).text();
+let BRYTHON_SCRIPT;
+
+var request = new XMLHttpRequest();
+request.open("GET", BRYTHON_SCRIPT_URL, false);
+request.send();
+BRYTHON_SCRIPT = request.responseText;
+
 
 __BRYTHON__.runPythonSource(BRYTHON_SCRIPT, "BLISS");
