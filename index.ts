@@ -5,7 +5,7 @@ import LISS from "./LISS/index.js";
 
 __BRYTHON__.imported.LISS = LISS;
 __BRYTHON__.imported.BLISS_HELPERS = {
-    run: function(e) { e() },
+    run: function(e: any) { e() },
     LISS: function(opts: any){ // dunno why required...
         return LISS(opts);
     },

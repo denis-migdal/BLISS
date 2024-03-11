@@ -10,17 +10,9 @@ for x in window.Object.getOwnPropertyNames(window):
 import LISS;
 import BLISS_HELPERS;
 
-def BLISS(css = javascript.UNDEFINED, content = javascript.UNDEFINED, host = HTMLElement, attributes = []):
+def BLISS(extends = object, css = javascript.UNDEFINED, content = javascript.UNDEFINED, host = HTMLElement, attributes = []):
 
-    return buildBlissBase(BLISS_HELPERS.LISS({
-         "attributes": attributes,
-         "host"      : host,
-         "content"   : content,
-         "css"       : css
-    }));
-
-def buildBlissBase(liss):
-    class BlissBase:
+    class BlissBase(extends):
 
         @property
         def content(self):
@@ -41,7 +33,13 @@ def buildBlissBase(liss):
         def onAttrChanged(self, name, oldValue, newValue):
             pass
 
-    BlissBase.LISS = liss
+    BlissBase.LISS = BLISS_HELPERS.LISS({
+         "attributes": attributes,
+         "host"      : host,
+         "content"   : content,
+         "css"       : css
+    })
+
     return BlissBase
 
 ####
@@ -65,7 +63,19 @@ BLISS.getBLISS = getBLISS
 def run(coroutine):
     BLISS_HELPERS.run(coroutine)
 
-BLISS.run = run  
+BLISS.run = run
+
+
+class BryEventTarget:
+    __eventTarget = EventTarget.new()
+    
+    def dispatchEvent(self, event ):
+        self.__eventTarget.dispatchEvent( event )
+
+    def addEventListener(self, event, listener):
+        self.__eventTarget.addEventListener( event, listener )
+
+BLISS.EventTarget = BryEventTarget
 
 #__all__ = ["BLISS"]
 

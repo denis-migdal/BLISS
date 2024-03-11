@@ -142,26 +142,35 @@ from BLISS import *;
 
 class MyComponent(BLISS(
                             host = HTMLTableRowElement, # the component is a <tr>
-                            #TODO: make BRYTHON class for that... (extending JS class is an issue)
-                            #extends = EventTarget,      # the component is able to send events.
+                            extends = BLISS.EventTarget,# the component is able to send events.
                             content = "<td>Hello World ;)</td>"
                         )):
 
     # Initialize your WebComponent
     def __init__(self):
-        pass
-        #this.host.addEventListener('click', () => {
-        #    this.dispatchEvent(new CustomEvent('click', {detail: null}));
-        #})
+
+        def click_handler(ev):
+            self.dispatchEvent( CustomEvent.new('click', {"details": None}) )
+            pass
+
+        self.host.addEventListener('click', click_handler)
 
 # Define your WebComponent
 BLISS.define('my-component', MyComponent); # define the "my-component" component.
 
-#const component = await LISS.qs('tr[is="my-component"]');
 
-#component.addEventListener('click', () => {
-#    alert('click');
-#});
+#const component = await LISS.qs(...);
+elem = document.querySelector('tr[is="my-component"]');
+
+async def main():
+    component = await BLISS.getBLISS( elem )
+
+    def click_handler(ev):
+        alert('click')
+    
+    component.addEventListener('click', click_handler);
+
+BLISS.run( main )
 ```
 
 ```html
@@ -180,7 +189,7 @@ LISS provides several tools to securely manipulate components through the DOM:
 - from an `HTMLElement`:
   
   ```python
-  BLISS.getBLISS(elem)
+  await BLISS.getBLISS(elem)
   ```
   
   [📖 See HTMLElement manipulations for more](#htmlelement-manipulations)
@@ -222,8 +231,6 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 ### BLISS full API
 
 ## TODO
-
-- [ ] EventTarget for Brython
 
 - [ ] TODO auto mode
 
