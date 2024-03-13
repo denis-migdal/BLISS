@@ -1,5 +1,5 @@
 const $B = __BRYTHON__;
-import LISS from "./LISS/index.js";
+import LISS, { LISS_Auto } from "./LISS/index.js";
 __BRYTHON__.imported.LISS = LISS;
 __BRYTHON__.imported.BLISS_HELPERS = {
     run: function (e) { e(); },
@@ -29,9 +29,21 @@ __BRYTHON__.imported.BLISS_HELPERS = {
 const CURRENT_SCRIPT_URL = import.meta.url;
 const BRYTHON_SCRIPT_URL = CURRENT_SCRIPT_URL.slice(0, CURRENT_SCRIPT_URL.lastIndexOf("/")) + "/bliss.py";
 //const BRYTHON_SCRIPT = await (await fetch(BRYTHON_SCRIPT_URL)).text();
-let BRYTHON_SCRIPT;
 var request = new XMLHttpRequest();
 request.open("GET", BRYTHON_SCRIPT_URL, false);
 request.send();
-BRYTHON_SCRIPT = request.responseText;
-__BRYTHON__.runPythonSource(BRYTHON_SCRIPT, "BLISS");
+const BRYTHON_SCRIPT = request.responseText;
+const BLISS = __BRYTHON__.runPythonSource(BRYTHON_SCRIPT, "BLISS");
+class BLISS_Auto extends LISS_Auto {
+    resources() {
+        return [
+            "index.py",
+            "index.html",
+            "index.css"
+        ];
+    }
+    async defineWebComponent(tagname, files, opts) {
+        BLISS.BLISSAuto_defineWebComponent(tagname, files, opts);
+    }
+}
+LISS.define("bliss-auto", BLISS_Auto);

@@ -86,3 +86,25 @@ def build_PyBlissBase(Klass, liss):
     pybliss_base.LISS = liss
     pybliss_base.__init__()
     return pybliss_base
+
+def BLISSAuto_defineWebComponent(tagname, files, opts):
+
+    opts = dict(opts)
+
+    WebComp = None
+    if "index.py" in files:
+        loc = {}
+        exec( files["index.py"], globals(), loc )
+        WebComp = loc["BLISSBuilder"](opts)
+
+    elif "index.html" in files:
+
+        class WebComponent( BLISS(**opts) ):
+            pass
+        WebComp = WebComponent
+
+    if WebComp is not None:
+        BLISS.define(tagname, WebComp);
+        return
+
+    raise Exception(f"Missing files for WebComponent $tagname.")
