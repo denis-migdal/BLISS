@@ -222,7 +222,78 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 
 ### Auto mode
 
-<mark>TODO</mark>
+BLISS can also automatically build and import your components, making them even easier to use.
+This feature is enabled simply by adding a `<bliss-auto src='$COMPONENTS_DIR'></bliss-auto>` HTML tag into your webpage:
+
+```html
+<!-- cf /examples/bliss-auto/ -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BLISS example</title>
+    <!-- Brython and BLISS scripts -->
+    <script src="$BRYTHON" defer></script>
+    <script src="$BLISS" type="module" defer></script>
+  </head>
+  <body>
+    <bliss-auto src="./components/"></bliss-auto>
+
+    <!-- some components -->
+    <liss-html></liss-html>
+    <liss-css></liss-css>
+    <liss-py></liss-py>
+  </body>
+</html>
+```
+
+In auto-mode, a component `<$name></$name>` must be defined in the `$COMPONENTS_DIR/$name` directory.
+For example, the component `<liss-html></liss-html>` will be defined in the `./components/liss-html/` directory.
+
+The component directory must at least include either an `index.py` or an `index.html` file.
+An optionnal `index.css` file can also be provided.
+
+⚠ In order to suppress 404 errors in the console, auto-mode requires to put the file `$BLISS/sw.js` in the same directory than your webpage.
+
+#### BLISS auto-mode with an HTML file
+
+Defining a component with only an HTML file is very easy with BLISS: simply create a `$COMPONENTS_DIR/$name/index.html` file with the component's HTML content:
+
+```html
+<!-- cf /examples/bliss-auto/components/liss-html/index.html -->
+Hello World
+```
+
+Will define the component `<liss-html></liss-html>` containing `Hello World`:
+
+```html
+<liss-html></liss-html> <!-- will print "Hello World" -->
+```
+
+You can also add a CSS file to your component, simple by adding a `$COMPONENTS_DIR/$name/index.css` file containing rules starting with `:host`:
+
+```css
+:host {
+  color: blue;
+}
+```
+
+#### BLISS auto-mode with an JS file
+
+You can also define a component with only a JS file, by creating a `$COMPONENTS_DIR/$name/index.js` file exporting a `BLISSBuilder` function returning a class extending `BLISS()`:
+
+```python
+# cf /examples/bliss-auto/components/liss-py/index.py
+from BLISS import *;
+
+def BLISSBuilder(options):
+	class BLISSComponent(BLISS(**options)):
+		def __init__(self):
+			pass # do stuff...
+
+	return BLISSComponent
+```
+
+You can also add an `index.html` and a `index.css` files to your component. LISS will then automatically use them to define your component's initial content. Their content are given by the `options` parameter.
 
 ### ShadowRoot helpers
 
@@ -231,9 +302,6 @@ BLISS.define('my-component', MyComponent); # define the "my-component" component
 ### BLISS full API
 
 ## TODO
-
-- [ ] TODO auto mode
-
 
 - [ ] Dynamically build component instances
 
